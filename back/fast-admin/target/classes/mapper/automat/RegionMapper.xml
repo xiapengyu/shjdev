@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunjian.modules.automat.dao.RegionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yunjian.modules.automat.entity.RegionEntity">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="parent_id" property="parentId" />
+        <result column="short_name" property="shortName" />
+        <result column="level_type" property="levelType" />
+        <result column="city_code" property="cityCode" />
+        <result column="zip_code" property="zipCode" />
+        <result column="merge_name" property="mergeName" />
+        <result column="pinyin" property="pinyin" />
+        <result column="lng" property="lng" />
+        <result column="lat" property="lat" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunjian.modules.automat.dao.WxConfigMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yunjian.modules.automat.entity.WxConfigEntity">
+        <id column="uuid" property="uuid" />
+        <result column="app_id" property="appId" />
+        <result column="mch_id" property="mchId" />
+        <result column="mch_key" property="mchKey" />
+        <result column="recharge_notify" property="rechargeNotify" />
+        <result column="order_notify" property="orderNotify" />
+        <result column="refund_notify" property="refundNotify" />
+    </resultMap>
+
+</mapper>

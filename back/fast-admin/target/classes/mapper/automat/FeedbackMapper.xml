@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.yunjian.modules.automat.dao.FeedbackMapper">
+
+	<!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yunjian.modules.automat.entity.FeedbackEntity">
+        <id column="feedback_id" property="feedbackId" />
+        <result column="phone" property="phone" />
+        <result column="content" property="content" />
+        <result column="image" property="image" />
+        <result column="order_code" property="orderCode" />
+        <result column="status" property="status" />
+        <result column="type" property="type" />
+        <result column="reason" property="reason" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_time" property="createTime" />
+        <result column="update_user" property="updateUser" />
+    </resultMap>
+
+	<insert id="saveFeedBack" useGeneratedKeys="true"
+		keyProperty="feedbackId"
+		parameterType="com.yunjian.modules.automat.entity.FeedbackEntity">
+		insert into
+		tb_feedback(feedback_id, phone,content,image,order_code,status,type,reason,create_time, update_time)
+		values(#{feedbackId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+		#{image,jdbcType=VARCHAR}, #{orderCode,jdbcType=VARCHAR},
+		#{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER},
+		#{reason,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+	</insert>
+
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunjian.modules.automat.dao.DeviceWarnMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yunjian.modules.automat.entity.DeviceWarnEntity">
+        <id column="device_id" property="deviceId" />
+        <result column="device_code" property="deviceCode" />
+        <result column="mac_address" property="macAddress" />
+        <result column="status" property="status" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="distribute" property="distribute" />
+        <result column="address" property="address" />
+        <result column="lng" property="lng" />
+        <result column="lat" property="lat" />
+        <result column="register_time" property="registerTime" />
+        <result column="create_time" property="createTime" />
+        <result column="has_deliver_people" property="hasDeliverPeople" />
+        <result column="street" property="street" />
+    </resultMap>
+    
+    <select id="findDeviceWarningByPhoneNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select dw.* from tb_device_warn dw
+        left join tb_device_member dm on dm.device_code = dw.device_code
+        where dm.phone_no = #{phoneNo}
+    </select>
+
+</mapper>

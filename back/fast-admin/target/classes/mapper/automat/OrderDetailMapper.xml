@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.yunjian.modules.automat.dao.OrderDetailMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap"
+		type="com.yunjian.modules.automat.entity.OrderDetailEntity">
+		<id column="detail_id" property="detailId" />
+		<result column="order_id" property="orderId" />
+		<result column="goods_name" property="goodsName" />
+		<result column="goods_price" property="goodsPrice" />
+		<result column="goods_amount" property="goodsAmount" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+	<select id="goodsAmountOrder" resultType="com.yunjian.modules.automat.vo.Pair">
+		<!-- SELECT goods.name as name,
+		goods.count as value FROM (
+		SELECT detail.goods_name as name, SUM(detail.goods_amount) as count from
+		tb_order_detail detail left join tb_order order on detail.order_id = order.order_id GROUP BY detail.goods_name
+		) goods limit 0, 10 -->
+		SELECT goods.name as name,
+		goods.count as value FROM (
+		SELECT detail.goods_name as name, SUM(detail.goods_amount) as count from
+		tb_order_detail detail left join tb_order o on detail.order_id = o.order_id 
+		where o.pay_status in (1,2,3,5) GROUP BY detail.goods_name ORDER BY count desc
+		) goods limit 0, 10
+	</select>
+
+</mapper>

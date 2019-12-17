@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunjian.modules.automat.dao.DeliverDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yunjian.modules.automat.entity.DeliverDetailEntity">
+        <id column="id" property="id" />
+        <result column="record_id" property="recordId" />
+        <result column="goods_name" property="goodsName" />
+        <result column="unit" property="unit" />
+        <result column="amount" property="amount" />
+        <result column="goods_price" property="goodsPrice" />
+        <result column="total_price" property="totalPrice" />
+        <result column="device_code" property="deviceCode" />
+        <result column="remark" property="remark" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+</mapper>

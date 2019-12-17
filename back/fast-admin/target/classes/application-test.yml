@@ -1,0 +1,80 @@
+spring:
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        druid:
+            driver-class-name: com.mysql.jdbc.Driver
+            url: jdbc:mysql://119.23.52.9:3306/shj?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+            username: shj
+            password: Shj123
+            initial-size: 10
+            max-active: 100
+            min-idle: 10
+            max-wait: 60000
+            pool-prepared-statements: true
+            max-pool-prepared-statement-per-connection-size: 20
+            time-between-eviction-runs-millis: 60000
+            min-evictable-idle-time-millis: 300000
+            #Oracle需要打开注释
+            #validation-query: SELECT 1 FROM DUAL
+            test-while-idle: true
+            test-on-borrow: false
+            test-on-return: false
+            stat-view-servlet:
+                enabled: true
+                url-pattern: /druid/*
+                #login-username: admin
+                #login-password: admin
+            filter:
+                stat:
+                    log-slow-sql: true
+                    slow-sql-millis: 1000
+                    merge-sql: false
+                wall:
+                    config:
+                        multi-statement-allow: true
+
+
+##多数据源的配置
+#dynamic:
+#  datasource:
+#    slave1:
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#      url: jdbc:mysql://localhost:3306/fast-admin?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+#      username: root
+#      password: 123456
+#    slave2:
+#      driver-class-name: org.postgresql.Driver
+#      url: jdbc:mysql://localhost:3306/fast-admin?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+#      username: root
+#      password: 123456
+
+qr:
+  code:
+    prefix: http://shjapi.yunjianit.com/app/sweepCode?orderNo={0}&deviceCode={1}
+    
+user:
+  sign:
+    key: EGDBGFDS5612768UGV90
+    
+tcp: 
+  command: 
+    api: http://127.0.0.1:38080/cr/tcp/command
+    
+wechat:
+  pay:
+    keyPath: /data/shj/api/apiclient_cert.p12
+    
+communication: 
+  goodsOutUrl: /tcp/goodsOut
+  cartOutUrl: /tcp/cartOut
+  sendAdUrl: /tcp/ad
+  base: 
+    path: http://shjtx.yunjianit.com/cr
+    
+aliyun:
+  sms:
+    isEnabled: true
+    accessKeyId: LTAIWIyz8GPVGQkI
+    secret: BLa7Ol2dpjMfFejksF5CXLTFOYn72K
+    tempCode: SMS_172165334
+    signName: 华笠美食

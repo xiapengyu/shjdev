@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunjian.modules.automat.dao.DeliverRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yunjian.modules.automat.entity.DeliverRecordEntity">
+        <id column="id" property="id" />
+        <result column="phone_no" property="phoneNo" />
+        <result column="device_code" property="deviceCode" />
+        <result column="up_amount" property="upAmount" />
+        <result column="down_amount" property="downAmount" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+    
+    <resultMap id="ResultMapExt" extends="BaseResultMap" type="com.yunjian.modules.automat.vo.DeliverRecordExt" >
+    	<association property="device" javaType="com.yunjian.modules.automat.vo.DeviceExt">
+	    	<id column="device_id" property="deviceId" />
+	        <result column="mac_address" property="macAddress" />
+	        <result column="province" property="province" />
+	        <result column="city" property="city" />
+	        <result column="distribute" property="distribute" />
+	        <result column="street" property="street" />
+	        <result column="address" property="address" />
+	        <result column="lng" property="lng" />
+	        <result column="lat" property="lat" />
+	    </association>
+    </resultMap>
+    
+    <select id="findByPhoneNo" resultMap="ResultMapExt">
+    	select dr.*,d.device_id,d.mac_address,d.province,d.city,d.distribute,d.street,d.address,d.lng,d.lat from tb_deliver_record dr
+        left join tb_device d on d.device_code = dr.device_code
+        where dr.phone_no=#{phoneNo}
+        order by dr.create_time desc
+        limit #{index} ,10
+    </select>
+
+</mapper>

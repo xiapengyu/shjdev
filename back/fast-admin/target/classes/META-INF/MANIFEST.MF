@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: fast-admin
+Implementation-Version: 1.0.0
+Built-By: 0723519X0
+Implementation-Vendor-Id: com.yunjian
+Build-Jdk: 1.8.0_151
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/fast-admin
+Created-By: Maven Integration for Eclipse
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunjian.modules.automat.dao.DeviceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yunjian.modules.automat.entity.DeviceEntity">
+        <id column="device_id" property="deviceId" />
+        <result column="device_code" property="deviceCode" />
+        <result column="mac_address" property="macAddress" />
+        <result column="status" property="status" />
+        <result column="online_status" property="onlineStatus" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="distribute" property="distribute" />
+        <result column="street" property="street" />
+        <result column="address" property="address" />
+        <result column="lng" property="lng" />
+        <result column="lat" property="lat" />
+        <result column="register_time" property="registerTime" />
+        <result column="create_time" property="createTime" />
+        <result column="password" property="password" />
+        <result column="test_password" property="testPassword" />
+    </resultMap>
+
+	<select id="queryByAisleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select d.* from tb_device d
+		left join tb_goods_aisle a on a.device_code = d.device_code
+		where a.aisle_id=#{aisleId}
+	</select>
+</mapper>

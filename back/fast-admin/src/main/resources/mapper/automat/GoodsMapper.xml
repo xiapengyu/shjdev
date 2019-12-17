@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunjian.modules.automat.dao.GoodsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yunjian.modules.automat.entity.GoodsEntity">
+        <id column="goods_id" property="goodsId" />
+        <result column="goods_name" property="goodsName" />
+        <result column="unit" property="unit" />
+        <result column="goods_price" property="goodsPrice" />
+        <result column="discount_price" property="discountPrice" />
+        <result column="img_path" property="imgPath" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <resultMap id="ExtResultMap" extends="BaseResultMap" type="com.yunjian.modules.automat.vo.GoodsExt">
+        <result column="goodsQuantity" property="goodsQuantity" />
+        <result column="needQuantity" property="needQuantity" />
+    </resultMap>
+
+    <select id="goodsList" resultMap="ExtResultMap" parameterType="java.lang.String">
+        SELECT ga.goods_quantity AS goodsQuantity, g.* FROM tb_goods g
+        LEFT JOIN tb_goods_aisle ga ON ga.goods_id = g.goods_id
+        LEFT JOIN tb_device d ON d.device_code = ga.device_code
+        WHERE ga.device_code=#{deviceCode}
+    </select>
+
+    <select id="stockoutGoodsList" resultMap="ExtResultMap" parameterType="java.lang.String">
+        SELECT ga.goods_quantity AS goodsQuantity, g.* FROM tb_goods g
+        LEFT JOIN tb_goods_aisle ga ON ga.goods_id = g.goods_id
+        LEFT JOIN tb_device d ON d.device_code = ga.device_code
+        WHERE ga.device_code=#{deviceCode} AND ga.goods_quantity &lt;= 2
+    </select>
+    
+    <select id="deliveryGoodsList" resultMap="ExtResultMap" parameterType="java.lang.Integer">
+    	select g.* from tb_goods g where g.goods_id in (
+			select dg.goods_id from tb_deliver_goods dg where dg.deliver_id = #{deliverId}
+		)
+    </select>
+
+</mapper>

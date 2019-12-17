@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yunjian.modules.automat.dao.WorkOrderMapper">
+
+	<select id="queryWorkNumber" parameterType="java.lang.Integer" resultType="com.yunjian.modules.automat.entity.WorkOrderEntity">
+		select * from tb_work_order where work_id = #{workId}
+	</select>
+
+	<select id="queryList" parameterType="com.yunjian.modules.automat.entity.WorkOrderEntity" resultType="com.yunjian.modules.automat.entity.WorkOrderEntity">
+		select * from tb_work_order wo where 1=1
+		<if test="wno.feedbackType != null ">
+			and wo.feedback_type = #{wo.feedbackType}
+		</if>
+		<if test="wno.startTime != null ">
+			<if test="wno.endTime != null ">
+				and now() between wo.start_time and wo.end_time
+			</if>
+		</if>
+	</select>
+
+	<update id="updateByExampleSelective" parameterType="com.yunjian.modules.automat.entity.WorkOrderEntity">
+		update tb_work_order
+		<set>
+			<if test="wno.feedbackType != null">
+				feedback_type = #{wno.feedbackType},
+			</if>
+			<if test="wno.content != null">
+				name = #{wno.content}
+			</if>
+		</set>
+		where work_id = #{wno.workId}
+	</update>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunjian.modules.automat.dao.GoodsAisleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yunjian.modules.automat.entity.GoodsAisleEntity">
+        <id column="aisle_id" property="aisleId" />
+        <result column="device_code" property="deviceCode" />
+        <result column="locker_no" property="lockerNo" />
+        <result column="aisle_no" property="aisleNo" />
+        <result column="goods_id" property="goodsId" />
+        <result column="goods_quantity" property="goodsQuantity" />
+    </resultMap>
+    
+    <resultMap id="AisleExtResultMap" extends="BaseResultMap" type="com.yunjian.modules.automat.vo.AisleExt" >
+	    <association property="goods" javaType="com.yunjian.modules.automat.entity.GoodsEntity">
+	    	<id column="goods_id" property="goodsId"/>
+	    	<result column="goods_name" property="goodsName"/>
+	    	<result column="img_path" property="imgPath"/>
+	    </association>
+	</resultMap>
+    
+    <select id="queryWarnDeviceCodes" resultType="java.lang.String">
+    	select distinct device_code from tb_goods_aisle <![CDATA[  where goods_quantity <=2 ]]>  
+    </select>
+    
+    <update id="replenishmentByDeviceCode" >
+    	update tb_goods_aisle set goods_quantity = #{goodsQuantity} 
+    	where device_code = #{deviceCode}
+    	and aisle_id= = #{aisleId}
+    </update>
+    
+    <select id="stockoutAisle" resultType="java.lang.Integer">
+    	select count(1) from tb_goods_aisle <![CDATA[  where goods_quantity <=2 ]]> and device_code = #{deviceCode}  
+    </select>
+    
+    <select id="queryTaskAisle"  parameterType="java.lang.String" resultMap="AisleExtResultMap">
+    	select g.goods_name,g.img_path,ga.* from tb_goods_aisle ga
+		left join tb_device_member dm on dm.device_code=ga.device_code 
+		left join tb_goods g on g.goods_id = ga.goods_id 
+		where ga.goods_quantity <![CDATA[ <= 2 ]]> and dm.phone_no = #{phoneNo}
+		order by ga.device_code
+    </select>
+
+</mapper>

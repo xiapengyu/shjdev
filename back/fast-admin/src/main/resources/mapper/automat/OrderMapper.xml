@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunjian.modules.automat.dao.OrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yunjian.modules.automat.entity.OrderEntity">
+        <id column="order_id" property="orderId" />
+        <result column="order_no" property="orderNo" />
+        <result column="weixin_order_no" property="weixinOrderNo" />
+        <result column="phone_no" property="phoneNo" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="goods_amount" property="goodsAmount" />
+        <result column="pay_status" property="payStatus" />
+        <result column="pay_way" property="payWay" />
+        <result column="pay_time" property="payTime" />
+        <result column="arefund_time" property="arefundTime" />
+        <result column="reject_time" property="rejectTime" />
+        <result column="refund_time" property="refundTime" />
+        <result column="sweep_time" property="sweepTime" />
+        <result column="create_time" property="createTime" />
+        <result column="integral" property="integral" />
+        <result column="device_code" property="deviceCode" />
+        <result column="qr_code" property="qrCode" />
+        <result column="qr_code_image" property="qrCodeImage" />
+        <result column="donate_amount" property="donateAmount" />
+        <result column="refund_no" property="refundNo" />
+        <result column="refund_amount" property="refundAmount" />
+        <result column="order_code" property="orderCode" />
+        <result column="out_success" property="outSuccess" />
+        <result column="out_fail" property="outFail" />
+    </resultMap>
+    
+    <resultMap extends="BaseResultMap" id="OrderMap"
+		type="com.yunjian.modules.automat.vo.OrderExt">
+		<collection
+			ofType="com.yunjian.modules.automat.entity.GoodsEntity"
+			property="goodsList">
+			<id column="goods_id" property="goodsId" />
+			<result column="goods_name" property="goodsName" />
+			<result column="goods_price" property="goodsPrice" />
+			<result column="img_path" property="imgPath" />
+		</collection>
+	</resultMap>
+
+	<select id="findByPhoneNo" parameterType="java.lang.String"
+		resultMap="OrderMap">
+		select
+		o.order_id,o.order_no,o.phone_no,o.total_amount,o.goods_amount,o.pay_status
+		, g.goods_id, g.goods_name,g.goods_price,g.img_path
+		from tb_order o
+		,tb_order_goods og ,tb_goods g
+		WHERE g.goods_id = og.goods_id and o.phone_no = #{phoneNo}
+		order by o.create_time desc
+	</select>
+	
+	<select id="queryOrderByOrderNo" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select * from tb_order where order_no = #{orderNo} for update
+	</select>
+
+	<delete id="deleteByOrderId" parameterType="java.lang.String">
+		delete from tb_order where order_id = #{orderId}
+	</delete>
+
+	<select id="findOrder"
+		parameterType="com.yunjian.modules.automat.entity.OrderEntity"
+		resultMap="BaseResultMap">
+		select * from tb_order where 1=1
+		<if test="orderId != null and orderId != '' ">
+			and order_id = #{orderId}
+		</if>
+		<if test="orderNo != null and orderNo !='' ">
+			and order_no = #{orderNo}
+		</if>
+		<if test="phoneNo != null and phoneNo != ''">
+			and phone_no = #{phoneNo}
+		</if>
+		<if test="payStatus != null and payStatus != ''">
+			and pay_status = #{payStatus}
+		</if>
+		<if test="payWay != null and payWay != '' ">
+			and pay_way = #{payWay}
+		</if>
+	</select>
+
+	<select id="queryHomeDeviceRankPage"
+		resultType="com.yunjian.modules.automat.vo.DeviceRankVo">
+		<!-- SELECT @rownum:=@rownum+1 AS id, device_code, amount FROM (
+		SELECT @rownum:=0, device_code, SUM(total_amount) as amount FROM tb_order 
+		where pay_status = 1 GROUP BY device_code
+		) info ORDER BY amount desc limit #{offset}, #{limit}; -->
+		SELECT @rownum:=@rownum+1 AS id, device_code, amount FROM (
+		SELECT @rownum:=0, device_code, SUM(total_amount) as amount FROM tb_order 
+		where pay_status in (1,2,3,5) GROUP BY device_code order by amount desc
+		) info ORDER BY amount desc limit #{offset}, #{limit};
+	</select>
+
+	<select id="queryHomeDeviceRankCount" resultType="Integer">
+		SELECT count(1) FROM (
+		SELECT @rownum:=0, device_code, SUM(total_amount) as amount FROM tb_order
+		GROUP BY device_code
+		) info;
+	</select>
+
+</mapper>

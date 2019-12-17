@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yunjian.modules.automat.dao.RechargeRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.yunjian.modules.automat.entity.RechargeRecordEntity">
+        <id column="recharge_id" property="rechargeId" />
+        <result column="wechat_order_no" property="wechatOrderNo" />
+        <result column="vender_order_no" property="venderOrderNo" />
+        <result column="phone_no" property="phoneNo" />
+        <result column="status" property="status" />
+        <result column="total_money" property="totalMoney" />
+        <result column="donate_money" property="donateMoney" />
+        <result column="cash" property="cash" />
+        <result column="create_time" property="createTime" />
+        <result column="pay_time" property="payTime" />
+    </resultMap>
+
+</mapper>
